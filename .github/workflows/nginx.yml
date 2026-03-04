@@ -1,0 +1,24 @@
+name: Installing nginx
+
+# manual approval
+on:
+  workflow_dispatch:
+
+jobs:
+  install-nginx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update & Install nginx
+        run: |
+          sudo apt update -y
+          sudo apt install nginx -y
+
+      - name: Start nginx
+        run: sudo systemctl start nginx
+
+      - name: Check nginx status
+        run: sudo systemctl is-active nginx
+
+      - name: Test nginx response
+        run: curl -I http://localhost
