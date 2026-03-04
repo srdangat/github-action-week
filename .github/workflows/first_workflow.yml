@@ -3,8 +3,7 @@ name: hello workflow
 
 # Trigger the workflow on every push
 on:
-  push:
-    branches: [main]
+  workflow_dispatch: 
 
 # Jobs inside the workflow
 jobs:
