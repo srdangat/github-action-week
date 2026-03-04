@@ -1,0 +1,16 @@
+name: Test on Change
+
+on:
+  push:
+    branches: [main]
+    paths: '**.html' # triggers on changes to any html file
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: say hello
+        run: echo "Hello ,index.html has changed"
