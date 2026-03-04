@@ -1,0 +1,40 @@
+name: Docker CICD
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        run: echo "Checking out repository..."
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [checkout] # This job runs only after checkout job complete
+    steps:
+      - name: Build Docker Image
+        run: echo "docker build -t username/demo:v1 ."
+
+  login:
+    runs-on: ubuntu-latest
+    needs: [build] # This job runs only after build job complete
+    steps:
+      - name: Login to DockerHub
+        run: echo "docker login -u USERNAME -p PASSWORD"
+
+  push:
+    runs-on: ubuntu-latest
+    needs: [login] # This job runs only after login job complete
+    steps:
+      - name: Push Docker Image
+        run: echo "docker push username/demo:v1"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [push] # This job runs only after push job complete
+    steps:
+      - name: Deploy
+        run: echo "docker compose up -d"
