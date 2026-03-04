@@ -19,7 +19,12 @@ jobs:
         - name: say hello to user
           run: echo "Hello $USER"
 
+        - name: print current date and time
+          run: date
 
+        - name: print branch name
+          run: | 
+            echo "Trigger by branch: ${{ github.ref_name }}"
 
 # Every job need a runner
 # Runner: github runner,self hosted runner
