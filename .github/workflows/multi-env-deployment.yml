@@ -39,5 +39,5 @@ jobs:
     needs: test
     if: github.event.inputs.environment == 'dev'
     steps:
-      - name: Deploy App to Dev
+      - name: Deploy app to dev
         run: echo "Deploying app to dev environment"
