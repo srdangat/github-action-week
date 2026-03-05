@@ -1,0 +1,14 @@
+name: daily run workflow
+
+on:
+ schedule:
+   - cron: "0 0 * * *" # Every day at midnight UTC
+
+jobs:
+  daily-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Daily run workflow
+        run: echo "Daily wokrflow running at middnight at UTC"
