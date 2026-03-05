@@ -1,0 +1,43 @@
+name: multi-env deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+
+jobs:
+  checkout_code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+  build:
+    runs-on: ubuntu-latest
+    needs: checkout_code
+    steps:
+      - name: Build Docker Image
+        run: echo "docker build -t srdangat/demo:v1 ."
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Run Docker Container
+        run: echo "docker run -d --name app srdangat/demo:v1"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event.inputs.environment == 'dev'
+    steps:
+      - name: Deploy App to Dev
+        run: echo "Deploying app to dev environment"
