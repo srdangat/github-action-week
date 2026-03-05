@@ -10,10 +10,7 @@ jobs:
       matrix: 
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - name: Cloning to user-space
-        uses: actions/checkout@v4
-      
-      - name: Installing the python version $ {{ matrix.python-version }}
+      - name: Installing the python versions
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
