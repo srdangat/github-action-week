@@ -1,0 +1,39 @@
+name: docker-tag
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - id: tag
+        run: echo "tag=myapp:1.0.0" >> $GITHUB_OUTPUT
+
+  push:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Pushing image" ${{ needs.build.outputs.image_tag }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: echo "Deploying image" ${{ needs.build.outputs.image_tag }}
+
+
+# Job 1 – Build Docker image
+# This job builds the image and creates a tag, for example:
+# myapp:1.0.0
+
+# Job 2 – Push image to registry
+# This job must know which image tag was created so it can push the correct image.
+
+# Job 3 – Deploy the app
+# The deployment job also needs the same tag myapp:1.0.0 to deploy that exact image.
+
+# Why pass outputs?
+
+# The tag created in Job 1 is passed as an output so the other jobs know exactly which Docker image to use.
