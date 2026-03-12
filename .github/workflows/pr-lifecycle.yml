@@ -28,11 +28,11 @@ jobs:
         run: echo "PR Opened"
 
       - name: PR Updated(Synnchronize)
-        if: ${{ github.event.action == 'synchronize'}}
+        if: ${{ github.event.action == 'synchronize' }}
         run: echo "PR Updated"
 
       - name: PR Reopened
-        if: ${{ github.event.action == 'reopned'}}
+        if: ${{ github.event.action == 'reopened' }}
         run: echo "PR Reopened"
 
       - name: PR Merged
@@ -41,4 +41,4 @@ jobs:
 
       - name: PR Closed without Merge
         if: ${{ github.event.action == 'closed' && github.event.pull_request.merged == false }}
-        run: "PR Closed without merging"
+        run: echo "PR Closed without merging"
