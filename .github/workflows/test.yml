@@ -1,17 +1,25 @@
-name: Test Composite Action
+name: Greeting Workflow
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  greet:
+  greet-job:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run composite action
+      - name: Run Composite Action
+        id: greet
         uses: ./.github/actions/setup-and-greet
         with:
-          name: "Sanket"
+          name: Sanket
+          language: es
+
+      - name: Verify Output
+        run: |
+          echo "Greeting executed: ${{ steps.greet.outputs.greeted }}"
