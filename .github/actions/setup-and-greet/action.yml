@@ -1,19 +1,42 @@
 name: Setup and Greet
-description: Example composite action that greets and prints the date
+description: Print greeting, date and OS
 
 inputs:
   name:
-    description: Name to greet
+    description: Name of the person
     required: true
 
-runs:
-  using: "composite"
-  steps:
-    - name: Greet user
-      shell: bash
-      run: echo "Hello ${{ inputs.name }}"
+  language:
+    description: Greeting language
+    required: false
+    default: en
 
-    - name: Print date
+outputs:
+  greeted:
+    description: Greeting status
+    value: ${{ steps.set.outputs.greeted }}
+
+runs:
+  using: composite
+
+  steps:
+    - name: Print Greeting
       shell: bash
       run: |
-       echo "Date: $(date)"
+        case "${{ inputs.language }}" in
+          en) echo "Hello, ${{ inputs.name }}!" ;;
+          es) echo "Hola, ${{ inputs.name }}!" ;;
+          fr) echo "Bonjour, ${{ inputs.name }}!" ;;
+          *) echo "Hello, ${{ inputs.name }}!" ;;
+        esac
+
+    - name: Print Date and Runner OS
+      shell: bash
+      run: |
+        echo "Current Date: $(date)"
+        echo "Runner OS: $RUNNER_OS"
+
+    - name: Set Output
+      id: set
+      shell: bash
+      run: echo "greeted=true" >> $GITHUB_OUTPUT
