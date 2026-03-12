@@ -1,0 +1,17 @@
+name: Test Composite Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run composite action
+        uses: ./.github/actions/setup-and-greet
+        with:
+          name: "Sanket"
