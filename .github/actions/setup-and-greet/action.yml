@@ -1,0 +1,19 @@
+name: Setup and Greet
+description: Example composite action that greets and prints the date
+
+inputs:
+  name:
+    description: Name to greet
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Greet user
+      shell: bash
+      run: echo "Hello ${{ inputs.name }}"
+
+    - name: Print date
+      shell: bash
+      run: |
+       echo "Date: $(date)"
