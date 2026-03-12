@@ -12,3 +12,9 @@ jobs:
       environment: "staging"
     secrets:
       docker_token: ${{ secrets.DOCKER_TOKEN }}
+  
+  print-version:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: "Build version: ${{ needs.build.outputs.build_version }}"
