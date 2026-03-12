@@ -1,1 +1,2 @@
 Testing PR workflow
+Test PR synchronize event
