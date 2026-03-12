@@ -10,6 +10,7 @@ on:
       environment:
         description: "Select Environments"
         required: true
+        default: "staging"
         type: string
     secrets:
       docker_token:
