@@ -1,9 +1,10 @@
 name: Test on Change
 
 on:
-  push:
-    branches: [main]
-    paths: '**.html' # triggers on changes to any html file
+ workflow_dispatch: 
+  # push:
+  #   branches: [main]
+  #   paths: '**.html' # triggers on changes to any html file
 
 jobs:
   hello:
