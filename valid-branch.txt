@@ -1,0 +1,1 @@
+Open a PR from a badly named branch — does the check fail?
