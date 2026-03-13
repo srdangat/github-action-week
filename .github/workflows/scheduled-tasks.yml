@@ -15,7 +15,11 @@ jobs:
 
       - name: Print which schedule triggered 
         run: |
-          echo "Workflow triggered by cron schedule: ${{ github.event.schedule }}"
+         if [ -z "${{ github.event.schedule }}" ]; then
+            echo "Workflow triggered manually"
+         else
+            echo "Workflow triggered by cron schedule: ${{ github.event.schedule }}"
+         fi
 
       - name: Health Check
         run: |
