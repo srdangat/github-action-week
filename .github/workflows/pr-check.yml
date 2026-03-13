@@ -1,0 +1,43 @@
+name: PR Validation Workflow
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  file-size-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Fail if any file >1 MB
+        run: |
+            # Find all files larger than 1 MB
+            LARGE=$(find . -type f -size +1M)
+            if [ -n "$LARGE" ]; then
+              echo "::error::The following files exceed 1 MB:"
+              echo "$LARGE"
+              exit 1
+            fi
+  branch-name-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Branch Name
+        uses: goshencollege/validate-branch-name@v1.0.1
+        with:
+          pattern: ^(feature|fix|docs)/
+  pr-body-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Warn if PR description is empty
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = context.payload.pull_request.body;
+            if (!body || body.trim() === "") {
+              core.warning("PR description is empty");
+            } else {
+              console.log("PR description is present");
+            }
