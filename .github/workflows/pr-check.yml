@@ -22,18 +22,19 @@ jobs:
   branch-name-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Branch Name
-        run: >
-          BRANCH="${{ github.head_ref }}"
-          case "$BRANCH" in
-            feature/*|fix/*|docs/*)
-              echo "Branch name '$BRANCH' is valid."
-              ;;
-            *)
-              echo "::error::Branch name '$BRANCH' is invalid. Must start with feature/, fix/, or docs/"
-              exit 1
-              ;;
-          esac
+     - name: Validate Branch Name
+       shell: bash
+       run: |
+        BRANCH="${{ github.head_ref }}"
+        case "$BRANCH" in
+          feature/*|fix/*|docs/*)
+            echo "Branch name '$BRANCH' is valid."
+            ;;
+          *)
+            echo "::error::Branch name '$BRANCH' is invalid. Must start with feature/, fix/, or docs/"
+            exit 1
+            ;;
+        esac
   pr-body-check:
     runs-on: ubuntu-latest
     steps:
