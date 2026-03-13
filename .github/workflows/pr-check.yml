@@ -23,10 +23,18 @@ jobs:
   branch-name-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Branch Name
-        uses: goshencollege/validate-branch-name@v1.0.1
-        with:
-          pattern: ^(feature|fix|docs)/
+      - name: Check branch name
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          if [[ ! "$BRANCH" =~ ^(feature|fix|docs)/ ]]; then
+            echo "::error::Branch name '$BRANCH' is invalid. Must start with feature/, fix/, or docs/"
+            exit 1
+          fi
+    # steps:
+    #   - name: Validate Branch Name
+    #     uses: goshencollege/validate-branch-name@v1.0.1
+    #     with:
+    #       pattern: ^(feature|fix|docs)/
   pr-body-check:
     runs-on: ubuntu-latest
     steps:
